@@ -1,0 +1,23 @@
+# ======================================================
+# ......................................................
+# ........ It's simple config for simple plugin. .......
+# ......................................................
+# ======================================================
+# Set true if need range mode and set false if not
+range-mode: true
+
+# Set number of blocks for ranged mode. Works if rande-mode is enabled.
+range-radius: 100
+
+# ===========================
+# ...........................
+# ....... Chat formats ......
+# ...........................
+# ===========================
+# works if range mode set to true
+local-format: "&f[&6L&f]&r {prefix}{player}{suffix}&r: {message}"
+# works if range mode set to true
+global-format: "&f[&cG&f]&r {prefix}{player}{suffix}&r: {message}"
+
+# works if range mode set to false
+default-format: "{prefix}{player}{suffix}&r: {message}"

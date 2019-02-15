@@ -1,0 +1,15 @@
+name: ManChat
+version: ${project.version}
+main: org.forbs.managerchat.ManagerChat
+api-version: 1.13
+loadbefore: [Vault]
+softdepend: [Vault]
+authors: [Forbs]
+description: Simple chat manager.
+commands:
+  chat:
+    description: Set default command.
+    aliases: [mchat]
+  who:
+    description: Who is the pidor?
+    usage: /<command> <pidor|lolka|admin>
