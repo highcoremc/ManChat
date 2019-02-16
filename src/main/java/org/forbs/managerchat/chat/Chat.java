@@ -49,7 +49,27 @@ public class Chat {
     public Chat setFormat(FormatInterface newFormat) {
         format = newFormat;
 
+        this.format.set(this.getFormatContext(format));
+
         return this;
+    }
+
+    public String getFormatContext(FormatInterface format) {
+        String formatText = DEFAULT_FORMAT;
+
+        try {
+            if (format instanceof GlobalFormat) {
+                formatText = config.getString(GLOBAL_FORMAT_CONFIG);
+            } else if (format instanceof LocalFormat) {
+                formatText = config.getString(LOCAL_FORMAT_CONFIG);
+            } else if (format instanceof DefaultFormat) {
+                formatText = config.getString(DEFAULT_FORMAT_CONFIG);
+            }
+        } catch (NullPointerException ex) {
+            ex.printStackTrace();
+        }
+
+        return formatText;
     }
 
     public FormatInterface getFormat() {
@@ -89,21 +109,7 @@ public class Chat {
         return recipients;
     }
 
-    public Chat setFormatText() {
-        String formatText = DEFAULT_FORMAT;
-
-        try {
-            if (format instanceof GlobalFormat) {
-                formatText = config.getString(GLOBAL_FORMAT_CONFIG);
-            } else if (format instanceof LocalFormat) {
-                formatText = config.getString(LOCAL_FORMAT_CONFIG);
-            } else if (format instanceof DefaultFormat) {
-                formatText = config.getString(DEFAULT_FORMAT_CONFIG);
-            }
-        } catch (NullPointerException ex) {
-            ex.printStackTrace();
-        }
-
+    public Chat setFormatText(String formatText) {
         this.format.set(formatText);
 
         return this;

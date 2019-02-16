@@ -53,7 +53,7 @@ public class ChatEventListener implements Listener {
 
         FormatInterface format = getFormat(plugin.rangeModeEnabled(), message);
 
-        chat.setFormat(format).setFormatText();
+        chat.setFormat(format);
 
         String formattedText = chat
                 .replacePlaceholders(player, message, prefix, suffix)
