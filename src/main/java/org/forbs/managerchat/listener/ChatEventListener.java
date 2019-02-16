@@ -20,16 +20,17 @@ import java.util.logging.Logger;
 
 public class ChatEventListener implements Listener {
 
-    private static final Logger logger = Logger.getLogger("Minecraft");
+    private static final Logger LOGGER = Logger.getLogger("ManChat");
 
-
+    private Chat chat;
     private ManagerChat plugin;
     private FileConfiguration config;
 
     @Inject
-    public ChatEventListener(ManagerChat plugin) {
+    public ChatEventListener(ManagerChat plugin, Chat chat) {
         this.plugin = plugin;
         this.config = plugin.getConfig();
+        this.chat = chat;
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -44,28 +45,29 @@ public class ChatEventListener implements Listener {
     }
 
     public void execute(AsyncPlayerChatEvent event) {
-        Player player = event.getPlayer();
         Message message = new Message(event.getMessage());
+        Player player = event.getPlayer();
 
         String prefix = ManagerChat.chat.getPlayerPrefix(player.getWorld().getName(), player);
         String suffix = ManagerChat.chat.getPlayerSuffix(player.getWorld().getName(), player);
 
-        Chat chat = getFormat(plugin.rangeModeEnabled(), message);
+        FormatInterface format = getFormat(plugin.rangeModeEnabled(), message);
+
+        chat.setFormat(format).setFormatText();
+
         String formattedText = chat
                 .replacePlaceholders(player, message, prefix, suffix)
                 .colorize()
                 .getContext();
-        logger.info("Simple context: " + chat.getContext());
-        logger.info("Parsed context: " + formattedText);
 
-        if (chat.getFormatType() instanceof LocalFormat) {
+        if (format instanceof LocalFormat) {
             chat.activateLocalChat(player, event);
         }
 
         event.setFormat(formattedText);
     }
 
-    private Chat getFormat(boolean rangeMode, Message message) {
+    private FormatInterface getFormat(boolean rangeMode, Message message) {
         FormatInterface format = new DefaultFormat();
 
         if (rangeMode) {
@@ -76,6 +78,6 @@ public class ChatEventListener implements Listener {
             }
         }
 
-        return new Chat(format, plugin);
+        return format;
     }
 }

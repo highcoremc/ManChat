@@ -7,18 +7,16 @@ import net.milkbowl.vault.chat.Chat;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.forbs.managerchat.config.ConfigurationInterface;
+import org.forbs.managerchat.config.Configuration;
 import org.forbs.managerchat.command.ManagerChatCommand;
 import org.forbs.managerchat.listener.ChatEventListener;
-import net.milkbowl.vault.chat.Chat;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public final class ManagerChat extends JavaPlugin {
 
     @Inject private ManagerChatCommand command;
-    @Inject private ConfigurationInterface configuration;
+    @Inject private Configuration configuration;
     @Inject private ChatEventListener chatListener;
 
     public static Chat chat = null;

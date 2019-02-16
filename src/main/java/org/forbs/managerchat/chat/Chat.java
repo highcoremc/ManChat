@@ -10,7 +10,6 @@ import org.forbs.managerchat.chat.formats.DefaultFormat;
 import org.forbs.managerchat.chat.formats.FormatInterface;
 import org.forbs.managerchat.chat.formats.GlobalFormat;
 import org.forbs.managerchat.chat.formats.LocalFormat;
-import org.forbs.managerchat.config.Configuration;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -32,24 +31,28 @@ public class Chat {
     protected static final String RANGE_RADIUS_CONFIG = "range-radius";
     protected static final double DEFAULT_RANGE_RADIUS = 100;
 
-    @Inject
     protected ManagerChat plugin;
 
     private FileConfiguration config;
-
     private FormatInterface format;
-    private String output;
 
-    public Chat(FormatInterface format, ManagerChat plugin) {
-        this.format = format;
+    @Inject
+    public Chat(ManagerChat plugin) {
         this.config = plugin.getConfig();
-
-        setFormatText();
-
-        this.output = this.format.get();
     }
 
-    public FormatInterface getFormatType() {
+    /**
+     *
+     * @param FormatInterface newFormat
+     * @return self
+     */
+    public Chat setFormat(FormatInterface newFormat) {
+        format = newFormat;
+
+        return this;
+    }
+
+    public FormatInterface getFormat() {
         return this.format;
     }
 
